@@ -1,16 +1,39 @@
 import pygame
 import constants
-from elements import Tree
+from elements import Tree, SmallStone
 import random
+import os
 
 class World:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.trees = [Tree(random.randint(0, width-40), 
-                           random.randint(0, height-40)) for _ in range(10)]
+
+        # Crear arboles aleatorios  
+        self.trees = [Tree(random.randint(0, width-constants.TREE_SIZE), 
+                           random.randint(0, height-constants.TREE_SIZE)) for _ in range(10)]
+
+        # Crear piedras aleatorias
+        self.small_stones = [SmallStone(random.randint(0, width-constants.SMALL_STONE_SIZE), 
+                           random.randint(0, height-constants.SMALL_STONE_SIZE)) for _ in range(15)]
+
+
+        grass_path = os.path.join('assets','images','objects','grass.png')
+        self.grass_image = pygame.image.load(grass_path).convert()
+        self.grass_image = pygame.transform.scale(self.grass_image, (constants.GRASS_SIZE, constants.GRASS_SIZE))
+
+
 
     def draw(self, screen):
-        screen.fill(constants.GREEN)
+        
+        for y in range(0, self.height, constants.GRASS_SIZE):
+            for x in range(0, self.width, constants.GRASS_SIZE):
+                screen.blit(self.grass_image, (x, y))
+
+        for small_stone in self.small_stones:
+            small_stone.draw(screen)
+            
         for tree in self.trees:
             tree.draw(screen)
+
+        
