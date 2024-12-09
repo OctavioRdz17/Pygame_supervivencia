@@ -1,2 +1,8 @@
-*.pyc
+
 env.txt
+
+# Ignorar carpetas __pycache__
+**/__pycache__/
+# Ignorar archivos compilados de Python
+*.pyc
+*.pyo
