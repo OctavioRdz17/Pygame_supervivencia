@@ -36,4 +36,10 @@ class World:
         for tree in self.trees:
             tree.draw(screen)
 
+    def draw_inventory(self,screen,character):
+        font = pygame.font.Font(None, 36)
+        wood_text = font.render(f"Wood: " + str(character.inventory["wood"]), True, constants.WHITE)
+        stone_text = font.render(f"Stone: " + str(character.inventory["stone"]), True, constants.WHITE)
         
+        screen.blit(wood_text, (10, 10))
+        screen.blit(stone_text, (10, 50))

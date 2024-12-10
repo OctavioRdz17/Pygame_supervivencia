@@ -8,7 +8,7 @@ class Character:
     def __init__(self,x,y):
         self.x = x
         self.y = y
-        self.inventory = {"wood":0,"stone":0,"food":0}
+        self.inventory = {"wood":0,"stone":0}
         image_path = os.path.join('assets','images','character','character.png')
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(self.image,(constants.CHARACTER_SIZE,constants.CHARACTER_SIZE))
@@ -34,8 +34,8 @@ class Character:
     
     def check_collision(self,x,y,obj):
         
-        return (x < obj.x + obj.size and x + self.size > obj.x and
-                y < obj.y + obj.size and y + self.size > obj.y)
+        return (x < obj.x + obj.size//2 and x + self.size//2 > obj.x and
+                y < obj.y + obj.size//2 and y + self.size//2 > obj.y)
     
     def is_near(self,obj):
         return (abs(self.x - obj.x) <= max(self.size , obj.size) and
@@ -44,9 +44,18 @@ class Character:
     def interact (self,world):
         for tree  in world.trees:
             if self.is_near(tree):
-                print("Estoy cerca de un arbol")
-
+                if tree.chop():
+                    self.inventory["wood"] += 1
+                    if tree.wood <= 0:
+                        world.trees.remove(tree)
+                return
+            
         for stone in world.small_stones:
             if self.is_near(stone):
-                print("Estoy cerca de una piedra")
+                if stone.mine():
+                    self.inventory["stone"] += 1
+                    if stone.stone <= 0:
+                        world.small_stones.remove(stone)
+                return
+                
      

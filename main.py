@@ -41,6 +41,7 @@ def main():
 
         world.draw(screen)
         character.draw(screen)
+        world.draw_inventory(screen,character)
 
         pygame.display.flip()
         clock.tick(60)
