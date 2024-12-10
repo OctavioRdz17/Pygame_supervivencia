@@ -16,7 +16,10 @@ pygame.display.set_caption("Fichicraft")
 def main():
     clock = pygame.time.Clock()
     world = World(constants.WIDTH, constants.HEIGHT)
+
+    # posicion del character en la mitad de la pantalla
     character = Character(constants.WIDTH // 2,constants.HEIGHT // 2)
+    show_inventory = False
 
     while True:
         for event in pygame.event.get():
@@ -26,6 +29,8 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_e:
                     character.interact(world)
+                if event.key == pygame.K_i:
+                    show_inventory = not show_inventory
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
@@ -41,7 +46,10 @@ def main():
 
         world.draw(screen)
         character.draw(screen)
-        world.draw_inventory(screen,character)
+        if show_inventory:
+            character.draw_inventory(screen)
+        else:
+            world.draw_inventory(screen,character)
 
         pygame.display.flip()
         clock.tick(60)
@@ -49,3 +57,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    

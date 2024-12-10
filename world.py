@@ -37,9 +37,6 @@ class World:
             tree.draw(screen)
 
     def draw_inventory(self,screen,character):
-        font = pygame.font.Font(None, 36)
-        wood_text = font.render(f"Wood: " + str(character.inventory["wood"]), True, constants.WHITE)
-        stone_text = font.render(f"Stone: " + str(character.inventory["stone"]), True, constants.WHITE)
-        
-        screen.blit(wood_text, (10, 10))
-        screen.blit(stone_text, (10, 50))
+        font = pygame.font.Font(None, 22)
+        instrucciones = font.render("Press 'i' to open the inventory", True, constants.WHITE)
+        screen.blit(instrucciones, (10,10))
